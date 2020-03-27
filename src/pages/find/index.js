@@ -19,15 +19,23 @@ export default class index extends Component {
         this.state = {
             options: [
                 {
-                    title: 'Open'
+                    title: 'Open',
+                    imageUnsel: "https://i.ibb.co/BsDMmvJ/clock.png",
+                    imageSelec: "https://i.ibb.co/xsR1TT4/clockselect.png",
                 },
                 {
-                    title: 'Near'
+                    title: 'Near',
+                    imageUnsel: "https://i.ibb.co/bNRqTrB/navigate.png",
+                    imageSelec: "https://i.ibb.co/HVR9yRz/navigate-Select.png",
                 },
                 {
-                    title: 'Price'
+                    title: 'Price',
+                    imageUnsel: "https://i.ibb.co/n7QjvvN/Updown.png",
+                    imageSelec: "https://i.ibb.co/1fnCvLB/Updown-Select.png",
                 },
-            ]
+            ],
+
+            selected: '',
         }
     }
 
@@ -35,11 +43,33 @@ export default class index extends Component {
 
     }
 
-    renderItem = ({item}) => {
-        return(
-            <TouchableOpacity style={{ marginHorizontal: 4, height: 35, width: 100, borderRadius: 20, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={{ color: '#1f1f1f', fontSize: 14 }}>{item.title}</Text>
-            </TouchableOpacity>
+    selected = (item) => { this.setState({ selected: item.title }) }
+
+    renderItem = ({ item }) => {
+
+
+
+        return (
+
+            <TouchableOpacity style={this.state.selected == item.title ? styles.selected : styles.unselected}
+                onPress={() => { this.selected(item) }}>
+
+                {
+                    this.state.selected == item.title ?
+
+                        <Image style={{ height: 24, width: 24 }}
+                            source={{ uri: item.imageSelec }} /> 
+                            
+                            :
+
+                        <Image style={{ height: 24, width: 24 }}
+                            source={{ uri: item.imageUnsel }} />
+                }
+
+
+                <Text style={{ color: '#1f1f1f', fontSize: 14, marginHorizontal: 4 }}>{item.title}</Text>
+
+            </TouchableOpacity >
         )
     }
 
@@ -52,7 +82,7 @@ export default class index extends Component {
                     <View style={styles.boxInput1}>
 
                         <Image style={{ height: 25, width: 25, alignSelf: 'center', marginLeft: 8 }}
-                            source={require("./../../assets/userName.png")} />
+                            source={require("./../../assets/menu.png")} />
 
                         <TextInput style={{ marginLeft: 8 }}
                             underlineColorAndroid="transparent"
@@ -64,7 +94,7 @@ export default class index extends Component {
 
                     <View style={styles.boxInput}>
                         <Image style={{ height: 25, width: 25, alignSelf: 'center', marginLeft: 10 }}
-                            source={require("./../../assets/house.png")} />
+                            source={require("./../../assets/link.png")} />
                         <Select2
                             style={{ alignSelf: 'center' }}
                             colorTheme={'#ff4c51'}
@@ -89,6 +119,7 @@ export default class index extends Component {
                         style={{ marginTop: 10 }}
                         pagingEnabled={true}
                         horizontal={true}
+                        keyExtractor={item => item.name}
                         showsHorizontalScrollIndicator={false}
                         onMomentumScrollEnd={this._onMomentumScrollEnd}
                         scrollEventThrottle={16}
@@ -105,6 +136,29 @@ export default class index extends Component {
 }
 
 const styles = StyleSheet.create({
+
+    selected: {
+        marginHorizontal: 4, 
+        height: 35, 
+        width: 100, 
+        borderRadius: 20, 
+        backgroundColor: '#ff4e4d', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        flexDirection: 'row'
+    },
+
+    unselected: {
+        marginHorizontal: 4, 
+        height: 35, 
+        width: 100, 
+        borderRadius: 20, 
+        backgroundColor: 'white', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        flexDirection: 'row'
+    },
+
     header: {
         flex: 1,
         backgroundColor: "#f0f0f0",
