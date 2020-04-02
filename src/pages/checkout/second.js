@@ -38,7 +38,7 @@ export default class second extends Component {
                     <Text style={{ color: '#A0A0A0', fontSize: 12, marginTop: 5 }}>How do you wish to continue?</Text>
 
                     <TouchableOpacity style={styles.box, { marginTop: 40 }}
-                        onPress={() => { this.props.navigation.navigate('third ') }}>
+                        onPress={() => { this.props.navigation.navigate('third') }}>
                         <Image style={{ height: 50, width: 300, borderRadius: 10 }}
                             source={require("./../../assets/background.png")} />
                         <Image style={{ height: 18, width: 18, position: 'absolute', marginVertical: 16, marginLeft: 15 }}

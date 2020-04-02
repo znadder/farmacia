@@ -8,12 +8,13 @@ import third from './../pages/checkout/third';
 import fourth from './../pages/checkout/fourth';
 import final from './../pages/checkout/final';
 import QRCodeScreen from './../pages/checkout/qrcode';
+import routesBottom from './../navigate/routesBottom';
 
 export default createAppContainer(createStackNavigator({
+    routesBottom,
     index,
     first,
     second,
-    QRCodeScreen,
     third,
     fourth,
     final,
