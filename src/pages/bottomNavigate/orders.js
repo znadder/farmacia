@@ -159,7 +159,17 @@ export default class orders extends Component {
 
                                 <View>
 
-                                    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1F1F1F', marginTop: 10 }}>{item.name}</Text>
+                                    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1F1F1F', marginTop: 10 }}>{item.name}  {this.state.currentOrderSelecet == item.id ?  
+
+                                        <Image style={{ height: 13, width: 13, marginLeft: 4}}
+                                         source={require("./../../assets/arrowUpBlack.png")}/>  
+
+                                        :
+                                        
+                                        <Image style={{ height: 13, width: 13, marginLeft: 4}}
+                                         source={require("./../../assets/arrowdownBlack.png")}/>  
+                                    } 
+                                    </Text>
                                     <Text style={{ fontSize: 10, color: '#b8bbc2', marginTop: 1 }}>{item.location}</Text>
                                     <Text style={{ fontSize: 10, color: '#b8bbc2' }}>{item.point}</Text>
 
@@ -377,7 +387,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.22,
         shadowRadius: 2.22,
-        
+
         elevation: 2,
     },
 
