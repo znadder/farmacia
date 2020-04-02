@@ -21,7 +21,13 @@ export default class first extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View style={styles.header}>
-                    <Text style={{ color: "#1f1f1f", fontWeight: 'bold', fontSize: 14 }}>CHECKOUT</Text>
+                    <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 15 }}
+                        onPress={() => { this.props.navigation.navigate('routesBottom') }}>
+                        <Image style={{ height: 18, width: 18 }}
+                            source={require("./../../assets/arrowleft.png")} />
+                    </TouchableOpacity>
+                    <Text style={{ color: "#1f1f1f", fontWeight: 'bold', fontSize: 14, alignSelf: 'center', marginLeft: 114 }}>CHECKOUT</Text>
+                    <View style={{ height: 1.5, width: '33.3%', backgroundColor: 'green', position: 'absolute', marginTop: 62 }}></View>
                 </View>
                 <View style={styles.container}>
 
@@ -60,8 +66,7 @@ const styles = StyleSheet.create({
     header: {
         flex: 1,
         backgroundColor: "white",
-        justifyContent: "center",
-        alignItems: 'center',
+        flexDirection: 'row',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,

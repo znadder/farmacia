@@ -7,6 +7,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import profile from './../pages/bottomNavigate/profile';
 import index from './../pages/find/index';
 import orders from './../pages/bottomNavigate/orders';
+import first from './../pages/checkout/first';
 
 // import AIcon from '../components/index';
 
@@ -30,12 +31,12 @@ const App = createBottomTabNavigator(
 
       }
     },
-    // Leaders: {
-    //   screen: leadersPage,
-    //   navigationOptions: {
+    Checkout: {
+      screen: first,
+      navigationOptions: {
 
-    //   }
-    // },
+      }
+    },
     // Settings: {
     //   screen: settingsPage,
     //   navigationOptions: {
@@ -97,7 +98,6 @@ const App = createBottomTabNavigator(
         fontSize: 14,
         justifyContent: 'center',
         alignSelf: 'center',
-        fontFamily: 'GentiumPlus-I',
       },
       indicatorStyle: {
         borderTopColor: "#CE1B29",
