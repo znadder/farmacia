@@ -106,18 +106,18 @@ export default class orders extends Component {
     }
 
     componentDidMount() {
-
+        this.setState({ selected: 'all' })
     }
 
 
     renderItensPharmacy = ({ item }) => {
         return (
 
-            <View style={{ width: "100%", backgroundColor: "white", marginTop: 1, justifyContent: 'center', paddingVertical: 5, borderTopWidth: 1, borderTopColor: '#f1f1f1', borderBottomLeftRadius: 15, borderBottomRightRadius: 15 }}>
+            <View style={{ width: "100%", backgroundColor: "white", justifyContent: 'center', paddingVertical: 15, borderBottomWidth: 1.6, borderBottomColor: '#f1f1f1', borderBottomLeftRadius: 15, borderBottomRightRadius: 15 }}>
 
-                <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#1f1f1f', marginLeft: 10, marginTop: 6 }}>{item.subTotal} DHS</Text>
-                <Text style={{ fontSize: 9, fontWeight: 'bold', color: '#1f1f1f', marginLeft: 10, }}>{item.name}</Text>
-                <Text style={{ fontSize: 9, fontWeight: 'bold', color: '#1f1f1f', marginLeft: 10 }}>Qty {item.qty} / Total {item.total} Dhs / Description {item.description}</Text>
+                <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#1f1f1f', marginLeft: 10 }}>{item.subTotal} DHS</Text>
+                <Text style={{ fontSize: 9, fontWeight: 'bold', color: '#1f1f1f', marginLeft: 10, marginTop: 4 }}>{item.name}</Text>
+                <Text style={{ fontSize: 9, fontWeight: 'bold', color: '#1f1f1f', marginLeft: 10, marginTop: 2 }}>Qty {item.qty} / Total {item.total} Dhs / Description {item.description}</Text>
 
             </View>
         )
@@ -136,7 +136,7 @@ export default class orders extends Component {
 
         return (
 
-            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10, paddingHorizontal: 10 }}>
+            <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10, marginBottom: 15, paddingVertical: 1 }}>
 
                 <View style={styles.contentInfos}>
 
@@ -150,7 +150,8 @@ export default class orders extends Component {
                         }}>
 
                         {/* view com as informações basicas  */}
-                        <View style={{ height: 125, width: "71%", backgroundColor: 'white', justifyContent: 'center' }}>
+                        <View style={{ width: "71%", backgroundColor: 'white', justifyContent: 'center' }}>
+
                             <View style={{ flexDirection: 'row' }}>
 
                                 <Image style={{ height: 70, width: 70, marginTop: 5 }}
@@ -166,33 +167,35 @@ export default class orders extends Component {
 
                             </View>
 
-                            <View style={{ flex: 1, backgroundColor: 'white', justifyContent: 'center', }}>
+                            <View style={{ paddingVertical: 10, backgroundColor: 'white', justifyContent: 'center', }}>
 
                                 <View style={{ flexDirection: 'row' }}>
 
-                                    <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#b8bbc2', marginLeft: 10 }}>STATUS</Text>
+                                    <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#b8bbc2', marginLeft: 1 }}>STATUS</Text>
                                     <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#b8bbc2', marginLeft: 60 }}>PURCHASE DATE </Text>
 
                                 </View>
 
                                 <View style={{ flexDirection: 'row', marginTop: 5, alignItems: 'center' }}>
 
-                                    <Image style={{ height: 16, width: 16, marginLeft: 1 }}
+                                    <Image style={{ height: 14, width: 14 }}
                                         source={selec_image} />
+
                                     <Text style={{ fontSize: 10, fontWeight: 'bold', color: '#1f1f1f', marginLeft: 4 }}>{item.verify}</Text>
-                                    <Text style={{ fontSize: 10, fontWeight: 'bold', color: '#1f1f1f', marginLeft: 60 }}>{item.puchaseData}</Text>
+                                    <Text style={{ fontSize: 10, fontWeight: 'bold', color: '#1f1f1f', marginLeft: 105, position: 'absolute' }}>{item.puchaseData}</Text>
 
                                 </View>
 
                             </View>
+
                         </View>
 
-                        <View style={{ backgroundColor: '#f1f1f1', width: "0.6%", height: 126 }}>
+                        <View style={{ backgroundColor: '#f1f1f1', width: "0.6%", height: "100%" }}>
 
                         </View>
 
                         {/* view com o dinheiro  */}
-                        <View style={{ height: 125, width: "23%", backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ width: "23%", backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}>
 
                             <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#1f1f1f' }}>{item.dhs}</Text>
                             <Text style={{ fontSize: 10, color: '#b8bbc2' }}>Dhs</Text>
@@ -204,8 +207,11 @@ export default class orders extends Component {
                     {
                         this.state.currentOrderSelecet == item.id &&
 
-                        <View style={{ backgroundColor: 'white', width: "100%", borderBottomLeftRadius: 15, borderBottomRightRadius: 15, shadowColor: '#000', shadowOffset: { width: 15, height: 10 }, shadowOpacity: 0.20, shadowRadius: 10, elevation: 5, }}>
-                            <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#b8bbc2', marginLeft: 10 }}>ORDER N° {item.id}</Text>
+                        <View style={{ backgroundColor: 'white', width: "100%", borderBottomLeftRadius: 10, borderBottomRightRadius: 10, shadowColor: "#000", shadowOffset: { width: 0, height: 1, }, shadowOpacity: 0.22, shadowRadius: 2.22, elevation: 3, }}>
+
+                            <View style={{ width: "100%", height: 1.6, backgroundColor: "#f1f1f1", marginTop: 10 }}></View>
+
+                            <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#b8bbc2', marginTop: 10, marginLeft: 10 }}>ORDER N° {item.id}</Text>
 
                             <FlatList
                                 style={{}}
@@ -222,7 +228,7 @@ export default class orders extends Component {
                 {
                     item.verify == 'Complete' &&
 
-                    < TouchableOpacity style={{ height: 40, width: "85%", backgroundColor: 'white', borderBottomStartRadius: 15, borderBottomEndRadius: 15, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', borderTopWidth: 1, borderColor: '#f1f1f1', alignSelf: 'center' }}
+                    < TouchableOpacity style={{ paddingVertical: 6, width: "85%", backgroundColor: '#ffffff', borderBottomStartRadius: 8, borderBottomEndRadius: 8, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', borderTopWidth: 1, borderColor: '#f1f1f1', alignSelf: 'center', shadowColor: "#000", shadowOffset: { width: 0, height: 1, }, shadowOpacity: 0.20, shadowRadius: 1.41, elevation: 2, }}
                         onPress={() => { alert("Adicionado no carrinho!") }}>
                         <Image style={{ height: 25, width: 25 }}
                             source={require("./../../assets/cart.png")} />
@@ -233,7 +239,7 @@ export default class orders extends Component {
                 {
                     item.verify == 'Verified' &&
 
-                    < TouchableOpacity style={{ height: 40, width: "85%", backgroundColor: 'white', borderBottomStartRadius: 15, borderBottomEndRadius: 15, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', borderTopWidth: 1, borderColor: '#f1f1f1', alignSelf: 'center' }}
+                    < TouchableOpacity style={{ paddingVertical: 6, width: "85%", backgroundColor: '#ffffff', borderBottomStartRadius: 8, borderBottomEndRadius: 8, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', borderTopWidth: 1, borderColor: '#f1f1f1', alignSelf: 'center', shadowColor: "#000", shadowOffset: { width: 0, height: 1, }, shadowOpacity: 0.20, shadowRadius: 1.41, elevation: 2, }}
                         onPress={() => { alert("Adicionado no carrinho!") }}>
                         <Image style={{ height: 25, width: 25 }}
                             source={require("./../../assets/cart.png")} />
@@ -248,12 +254,12 @@ export default class orders extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flexGrow: 1 }}>
 
                 <View style={styles.header}>
-                    <Image style={{ height: 28, width: 28, marginLeft: 10 }}
-                        source={require("./../../assets/menu.png")} />
-                    <Text style={{ color: "#1f1f1f", fontWeight: 'bold', fontSize: 14, marginLeft: 120 }}>ORDERS</Text>
+
+                    <Text style={{ color: "#1f1f1f", fontWeight: 'bold', fontSize: 14 }}>ORDERS</Text>
+
                 </View>
 
                 <View style={styles.container}>
@@ -284,8 +290,7 @@ export default class orders extends Component {
                     </View>
 
                     <FlatList
-                        style={styles.flatlistItens}
-                        contentContainerStyle={{ paddingBottom: 1 }}
+                        style={{ backgroundColor: '#fcfeff' }}
                         data={this.state.pharmacy}
                         keyExtractor={item => item.name}
                         renderItem={this.renderSeparedBlock}
@@ -300,9 +305,10 @@ export default class orders extends Component {
 const styles = StyleSheet.create({
 
     header: {
-        flex: 1.1,
+        paddingVertical: 20,
         backgroundColor: "white",
         alignItems: 'center',
+        justifyContent: 'center',
         flexDirection: 'row',
         shadowColor: "#000",
         shadowOffset: {
@@ -317,22 +323,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 10,
         backgroundColor: '#f1f1f1',
-    },
-
-    box: {
-        height: 50,
-        width: "100%",
-        borderRadius: 10,
-        flexDirection: 'row',
-        backgroundColor: "white",
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.20,
-        shadowRadius: 10,
-        elevation: 5,
-        marginLeft: 5,
-        marginRight: 5,
-        marginTop: 10,
     },
 
     textUnselect: {
@@ -364,61 +354,66 @@ const styles = StyleSheet.create({
     },
 
     optionsbox: {
-        height: 60,
+        paddingVertical: 16,
         backgroundColor: '#fcfeff',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.20,
-        shadowRadius: 10,
-        elevation: 5,
     },
 
     firstBox: {
-        height: 130,
+        paddingBottom: 10,
         width: "100%",
         backgroundColor: 'white',
         marginTop: 0,
-        borderRadius: 15,
+        borderRadius: 8,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 15, height: 10 },
-        shadowOpacity: 0.20,
-        shadowRadius: 10,
-        elevation: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        
+        elevation: 2,
     },
 
     firstBoxOpen: {
-        height: 130,
         width: "100%",
         backgroundColor: 'white',
         marginTop: 0,
-        borderRadius: 15,
-        borderTopLeftRadius: 15,
-        borderTopLeftRadius: 15,
+        borderTopLeftRadius: 8,
+        borderTopLeftRadius: 8,
         borderBottomStartRadius: 0,
         borderBottomEndRadius: 0,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 15, height: 0 },
-        shadowOpacity: 0.20,
-        shadowRadius: 10,
-        elevation: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+
+        elevation: 3,
     },
 
     contentInfos: {
         width: '100%',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.20,
-        shadowRadius: 90,
-        elevation: 5,
-        borderRadius: 15
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
+
+        borderRadius: 10
     }
 })
