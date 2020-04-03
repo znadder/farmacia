@@ -21,14 +21,19 @@ export default class first extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View style={styles.header}>
-                    <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 15 }}
+
+                    {/* <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 15 }}
                         onPress={() => { this.props.navigation.navigate('routesBottom') }}>
                         <Image style={{ height: 18, width: 18 }}
                             source={require("./../../assets/arrowleft.png")} />
-                    </TouchableOpacity>
-                    <Text style={{ color: "#1f1f1f", fontWeight: 'bold', fontSize: 14, alignSelf: 'center', marginLeft: 114 }}>CHECKOUT</Text>
-                    <View style={{ height: 1.5, width: '33.3%', backgroundColor: 'green', position: 'absolute', marginTop: 62 }}></View>
+                    </TouchableOpacity> */}
+
+                    <Text style={{ color: "#1f1f1f", fontWeight: 'bold', fontSize: 14 }}>CHECKOUT</Text>
+
                 </View>
+
+                <View style={{ height: "1.5%", width: '33.3%', backgroundColor: 'green', position: 'absolute', marginTop: 62 }}></View>
+
                 <View style={styles.container}>
 
                     <Image style={{ height: 85, width: 85 }}
@@ -38,7 +43,7 @@ export default class first extends Component {
                     <Text style={{ color: '#A0A0A0', fontSize: 12, marginTop: 5 }}>Getting your medications only takes a minute</Text>
 
                     <TouchableOpacity style={styles.box, { marginTop: 40 }}
-                    onPress={() => { this.props.navigation.navigate('second') }}>
+                        onPress={() => { this.props.navigation.navigate('second') }}>
                         <Image style={{ height: 50, width: 300, borderRadius: 10 }}
                             source={require("./../../assets/background.png")} />
                         <Image style={{ height: 24, width: 24, position: 'absolute', marginVertical: 14, marginLeft: 15 }}
@@ -47,7 +52,7 @@ export default class first extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{ marginBottom: 100 }}
-                    onPress={() => { alert('Option under development') }}>
+                        onPress={() => { alert('Option under development') }}>
                         <View style={styles.box}>
                             <Image style={{ height: 24, width: 24, position: 'absolute', marginVertical: 14, marginLeft: 15 }}
                                 source={require("./../../assets/userE.png")} />
@@ -67,6 +72,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "white",
         flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,

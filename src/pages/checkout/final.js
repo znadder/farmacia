@@ -12,10 +12,10 @@ export default class final extends Component {
         this.state = {
 
             basic_infos: {
-                name: '',
-                nuermb: '',
-                location: '',
-                type_building: '',
+                name: 'Arthur',
+                number: '33485352',
+                location: 'Londrina',
+                type_building: 'Casa',
             },
 
             orders: [
@@ -39,7 +39,7 @@ export default class final extends Component {
                 },
                 {
                     product_Id: 4,
-                    product_Name: 'Iboprofeno',
+                    product_Name: 'Ibiprofeno',
                     product_price: 9,
                     qnt: 1,
                 },
@@ -58,7 +58,7 @@ export default class final extends Component {
 
     componentDidMount() {
         this.calcTotal()
-        this.getInfos()
+        // this.getInfos()
     }
 
     getInfos = () => {
@@ -91,12 +91,21 @@ export default class final extends Component {
         console.log(item)
         let total = item.qnt * item.product_price
         return (
-            <View style={{ flexGrow: 1, height: 80 }}>
-                <Text style={{ fontSize: 15, color: '#1f1f1f', fontWeight: 'bold', marginLeft: 15, marginTop: 4 }}>$ {item.product_price}</Text>
-                <Text style={{ fontSize: 10, color: '#7b7b7b', marginLeft: 15 }}>{item.product_Name}</Text>
-                <Text style={{ fontSize: 12, color: '#7b7b7b', marginLeft: 15 }}>Qty {item.qnt}  <Image style={{ height: 7, width: 7, marginLeft: 10 }}
-                    source={require("./../../assets/arrowdown.png")} />  Total $ {total}</Text>
-                <View style={{ backgroundColor: '#eeeeee', height: 1, width: 250, marginTop: 20, alignSelf: 'center' }}></View>
+            <View style={{ paddingVertical: 16, borderBottomColor: '#f3f3f7', borderBottomWidth: 1.5 }}>
+
+                <Text style={{ fontSize: 15, color: '#1f1f1f', fontWeight: 'bold', marginTop: 4 }}>{item.product_price} DHS</Text>
+
+                <Text style={{ fontSize: 13, color: '#7b7b7b', marginTop: 6 }}>{item.product_Name}</Text>
+
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+
+                    <Text style={{ fontSize: 13, color: '#1f1f1f' }}>Qty {item.qnt}</Text>
+
+                    <Image style={{ height: 5, width: 7, marginHorizontal: 5 }}
+                        source={require("./../../assets/largearrowdown.png")} />
+
+                    <Text style={{ fontSize: 13, color: '#1f1f1f' }}>Total {total}Dhs / Description 5 pens</Text>
+                </View>
             </View>
         )
     }
@@ -106,130 +115,211 @@ export default class final extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View style={styles.header}>
+
                     <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 15 }}
                         onPress={() => { this.props.navigation.navigate('fourth') }}>
+
                         <Image style={{ height: 18, width: 18 }}
                             source={require("./../../assets/arrowleft.png")} />
+
                     </TouchableOpacity>
+
                     <Text style={{ color: "#1f1f1f", fontWeight: 'bold', fontSize: 14, alignSelf: 'center', marginLeft: 114 }}>CHECKOUT</Text>
+
                 </View>
 
                 <ScrollView
-                    contentContainerStyle={{ paddingVertical: 14 }}
+                    contentContainerStyle={{ paddingVertical: 14, paddingHorizontal: 20 }}
                     style={styles.container}>
 
                     <View style={styles.boxOpen}>
 
-                        <TouchableOpacity onPress={() => { this.setState({ show_info: !this.state.show_info }) }}>
-                            <Text style={{ fontSize: 18, color: '#1f1f1f', fontWeight: 'bold', marginLeft: 15, marginTop: 15, marginBottom: 15 }}>Basic Info & Address</Text>
-                            <Image style={{ height: 30, width: 30, position: 'absolute', marginLeft: 280, marginTop: 15 }}
-                                source={require("./../../assets/arrowdownWhite.png")} />
+                        <TouchableOpacity style={{ alignItems: 'flex-start', paddingVertical: 15, paddingHorizontal: 15 }}
+
+                            onPress={() => { this.setState({ show_info: !this.state.show_info }) }}>
+
+                            <Text style={{ fontSize: 18, color: '#1f1f1f', fontWeight: 'bold' }}>Basic Info & Address</Text>
+
+                            {
+                                this.state.show_info ?
+
+                                    <Image style={{ height: 30, width: 30, position: 'absolute', right: -12, marginTop: 14 }}
+                                        source={require("./../../assets/arrowUpWhite.png")} />
+
+                                    :
+
+                                    <Image style={{ height: 30, width: 30, position: 'absolute', right: -12, marginTop: 14 }}
+                                        source={require("./../../assets/arrowdownWhite.png")} />
+                            }
+
+                            {
+                                this.state.show_info &&
+                                <>
+                                    <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', marginTop: 10, marginLeft: 2 }}>Name</Text>
+                                    <Text style={{ fontSize: 16, color: '#7b7b7b', marginLeft: 2 }}>{this.state.basic_infos.name}</Text>
+                                    <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', marginTop: 16, marginLeft: 2 }}>Phone Number</Text>
+                                    <Text style={{ fontSize: 16, color: '#7b7b7b', marginLeft: 2 }}>{this.state.basic_infos.number}</Text>
+                                    <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', marginTop: 16, marginLeft: 2 }}>State - Country</Text>
+                                    <Text style={{ fontSize: 16, color: '#7b7b7b', marginLeft: 2 }}>{this.state.basic_infos.location} - Brazil</Text>
+                                    <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', marginTop: 16, marginLeft: 2 }}>Type building</Text>
+                                    <Text style={{ fontSize: 16, color: '#7b7b7b', marginLeft: 2 }}>{this.state.basic_infos.type_building}</Text>
+                                </>
+                            }
+
                         </TouchableOpacity>
-                        {
-                            this.state.show_info &&
-                            <>
-                                <Text style={{ fontSize: 14, color: '#1f1f1f', fontWeight: 'bold', marginLeft: 15 }}>Name</Text>
-                                <Text style={{ fontSize: 16, color: '#7b7b7b', marginLeft: 20 }}>{this.state.basic_infos.name}</Text>
-                                <Text style={{ fontSize: 14, color: '#1f1f1f', fontWeight: 'bold', marginLeft: 15, marginTop: 20 }}>Phone Number</Text>
-                                <Text style={{ fontSize: 16, color: '#7b7b7b', marginLeft: 20 }}>{this.state.basic_infos.number}</Text>
-                                <Text style={{ fontSize: 14, color: '#1f1f1f', fontWeight: 'bold', marginLeft: 15, marginTop: 20 }}>State - Country</Text>
-                                <Text style={{ fontSize: 16, color: '#7b7b7b', marginLeft: 20 }}>{this.state.basic_infos.location} - Brazil</Text>
-                                <Text style={{ fontSize: 14, color: '#1f1f1f', fontWeight: 'bold', marginLeft: 15, marginTop: 20 }}>Type building</Text>
-                                <Text style={{ fontSize: 16, color: '#7b7b7b', marginLeft: 20, marginBottom: 10 }}>{this.state.basic_infos.type_building}</Text>
-                            </>
-                        }
                     </View>
 
-                    <View style={styles.products}>
-                        <TouchableOpacity onPress={() => { this.setState({ show_products: !this.state.show_products }) }}>
-                            <Text style={{ fontSize: 18, color: '#1f1f1f', fontWeight: 'bold', marginLeft: 15, marginTop: 15, marginBottom: 15 }}>Your Order</Text>
-                            <Image style={{ height: 30, width: 30, position: 'absolute', marginLeft: 280, marginTop: 15 }}
-                                source={require("./../../assets/arrowdownWhite.png")} />
+                    <View style={styles.boxOpen}>
+
+                        <TouchableOpacity style={{ alignItems: 'flex-start', paddingVertical: 15, paddingHorizontal: 15 }}
+                            onPress={() => { this.setState({ show_products: !this.state.show_products }) }}>
+
+                            <Text style={{ fontSize: 18, color: '#1f1f1f', fontWeight: 'bold' }}>Your Order</Text>
+
+                            {
+                                this.state.show_products ?
+
+                                    <Image style={{ height: 30, width: 30, position: 'absolute', right: -12, marginTop: 14 }}
+                                        source={require("./../../assets/arrowUpWhite.png")} />
+
+                                    :
+
+                                    <Image style={{ height: 30, width: 30, position: 'absolute', right: -12, marginTop: 14 }}
+                                        source={require("./../../assets/arrowdownWhite.png")} />
+                            }
+
+                            {
+                                this.state.show_products &&
+
+                                <>
+
+                                    <FlatList
+                                        style={{ width: "100%" }}
+                                        contentContainerStyle={{ paddingVertical: 10 }}
+                                        data={this.state.orders}
+                                        keyExtractor={item => item.name}
+                                        renderItem={this.renderItem}
+                                    />
+
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <View style={{ width: "50%", paddingVertical: 8 }}>
+
+                                            <Text style={{ fontSize: 15, color: '#5e5e5e' }}>Shipping</Text>
+                                            <Text style={{ fontSize: 15, color: '#1f1f1f', fontWeight: 'bold', marginTop: 4 }}>Total</Text>
+
+
+                                        </View>
+
+                                        <View style={{ width: "50%", paddingVertical: 8, alignItems: 'flex-end' }}>
+                                            <Text style={{ fontSize: 14, color: '#1dc6d2' }}>Free</Text>
+                                            <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold' }}>{this.state.value_total} Dhs</Text>
+
+                                        </View>
+                                    </View>
+
+
+                                </>
+                            }
+
                         </TouchableOpacity>
-                        {
-                            this.state.show_products &&
-                            <>
-                                <FlatList
-                                    contentContainerStyle={{ flexGrow: 1 }}
-                                    style={styles.flatlistItens}
-                                    data={this.state.orders}
-                                    keyExtractor={item => item.name}
-                                    renderItem={this.renderItem}
-                                />
-                                <View style={{ paddingHorizontal: 30, flexDirection: 'row', marginTop: 10 }}>
-                                    <Text style={{ fontSize: 14, color: '#5e5e5e' }}>Shipping</Text>
-                                    <Text style={{ fontSize: 14, color: '#1dc6d2', marginLeft: 162 }}>Free</Text>
-                                </View>
-                                <View style={{ paddingHorizontal: 30, flexDirection: 'row', marginTop: 2, marginBottom: 20 }}>
-                                    <Text style={{ fontSize: 14, color: '#1f1f1f', fontWeight: 'bold' }}>Total</Text>
-                                    <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', marginLeft: 182 }}>{this.state.value_total} $</Text>
-                                </View>
-                            </>
-
-                        }
-
-
                     </View>
 
-                    <View style={styles.payment}>
+                    <View style={styles.boxOpen}>
 
-                        <TouchableOpacity onPress={() => { this.setState({ show_payment: !this.state.show_payment }) }}>
-                            <Text style={{ fontSize: 18, color: '#1f1f1f', fontWeight: 'bold', marginLeft: 15, marginTop: 15, marginBottom: 15 }}>Payment Method</Text>
-                            <Image style={{ height: 30, width: 30, position: 'absolute', marginLeft: 280, marginTop: 15 }}
-                                source={require("./../../assets/arrowdownWhite.png")} />
-                        </TouchableOpacity>
+                        <TouchableOpacity style={{ alignItems: 'flex-start', paddingVertical: 15, paddingHorizontal: 15 }}
+                            onPress={() => { this.setState({ show_payment: !this.state.show_payment }) }}>
 
-                        {
-                            this.state.show_payment &&
-                            <>
-                                <View style={styles.card}>
+                            <Text style={{ fontSize: 18, color: '#1f1f1f', fontWeight: 'bold' }}>Payment Method</Text>
 
-                                    <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
-                                        onPress={() => { this.setState({ payment_option_card: !this.state.payment_option_card }) }}>
 
-                                        <Image style={{ height: 25, width: 28, alignSelf: 'center', marginLeft: 18 }}
-                                            source={require("./../../assets/card.png")} />
-                                        <Text style={{ fontSize: 15, color: '#7b7b7b', alignSelf: 'center', marginLeft: 10, fontWeight: 'normal' }}>Card</Text>
+                            {
+                                this.state.show_payment ?
+
+                                    <Image style={{ height: 30, width: 30, position: 'absolute', right: -12, marginTop: 14 }}
+                                        source={require("./../../assets/arrowUpWhite.png")} />
+
+                                    :
+
+                                    <Image style={{ height: 30, width: 30, position: 'absolute', right: -12, marginTop: 14 }}
+                                        source={require("./../../assets/arrowdownWhite.png")} />
+                            }
+
+                            {
+                                this.state.show_payment &&
+
+                                <>
+
+                                    <TouchableOpacity style={styles.card}
+                                        onPress={() => {
+                                            this.setState({ payment_option_card: !this.state.payment_option_card })
+
+                                            if (this.state.payment_option_cash = true) {
+                                                this.setState({ payment_option_cash: !this.state.payment_option_cash })
+                                            }
+                                        }}>
+
+                                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20 }}>
+                                            <Image style={{ height: 25, width: 28 }}
+                                                source={require("./../../assets/card.png")} />
+                                            <Text style={{ fontSize: 15, color: '#7b7b7b', fontWeight: 'normal', marginLeft: 6 }}>Card</Text>
+                                        </View>
 
                                         {
                                             this.state.payment_option_card ?
-                                                <Image style={{ height: 25, width: 25, marginLeft: 100 }}
+                                                <Image style={{ height: 25, width: 25, marginRight: 18 }}
                                                     source={require("./../../assets/circleselect.png")} />
                                                 :
-                                                <Image style={{ height: 25, width: 25, marginLeft: 100 }}
+                                                <Image style={{ height: 25, width: 25, marginRight: 18 }}
                                                     source={require("./../../assets/circleunselect.png")} />
                                         }
 
                                     </TouchableOpacity>
 
-                                </View>
+                                    <TouchableOpacity style={styles.cash}
+                                        onPress={() => {
+                                            this.setState({ payment_option_cash: !this.state.payment_option_cash })
 
-                                <View style={styles.cash}>
+                                            if (this.state.payment_option_card = true) {
+                                                this.setState({ payment_option_card: !this.state.payment_option_card })
+                                            }
+                                        }}>
 
-                                    <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
-                                        onPress={() => { this.setState({ payment_option_cash: !this.state.payment_option_cash }) }}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20 }}>
 
-                                        <Image style={{ height: 25, width: 28, alignSelf: 'center', marginLeft: 18 }}
-                                            source={require("./../../assets/cash.png")} />
-                                        <Text style={{ fontSize: 15, color: '#7b7b7b', alignSelf: 'center', marginLeft: 10, fontWeight: 'normal' }}>Cash</Text>
+                                            <Image style={{ height: 25, width: 28 }}
+                                                source={require("./../../assets/cash.png")} />
+                                            <Text style={{ fontSize: 15, color: '#7b7b7b', fontWeight: 'normal', marginLeft: 6 }}>Cash</Text>
+
+                                        </View>
 
                                         {
                                             this.state.payment_option_cash ?
-                                                <Image style={{ height: 25, width: 25, marginLeft: 100 }}
+                                                <Image style={{ height: 25, width: 25, marginRight: 18 }}
                                                     source={require("./../../assets/circleselect.png")} />
                                                 :
-                                                <Image style={{ height: 25, width: 25, marginLeft: 100 }}
+                                                <Image style={{ height: 25, width: 25, marginRight: 18 }}
                                                     source={require("./../../assets/circleunselect.png")} />
                                         }
                                     </TouchableOpacity>
 
-                                </View>
-                            </>
-                        }
+                                </>
+                            }
+
+                        </TouchableOpacity>
 
                     </View>
 
+                    <View style={{ marginTop: 345 }}>
+                        <TouchableOpacity style={styles.box}
+                            onPress={() => { this.props.navigation.navigate('routesBottom') }}>
 
+                            <Image style={{ height: 40, width: "100%", borderRadius: 20 }}
+                                source={require("./../../assets/background.png")} />
+
+                            <Text style={{ color: '#f1f1f1', fontSize: 14, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONFIRM</Text>
+
+                        </TouchableOpacity>
+                    </View>
 
                 </ScrollView>
             </View>
@@ -240,7 +330,7 @@ export default class final extends Component {
 const styles = StyleSheet.create({
 
     header: {
-        flex: 0.1,
+        paddingVertical: 20,
         backgroundColor: "white",
         flexDirection: 'row',
         shadowColor: "#000",
@@ -258,89 +348,58 @@ const styles = StyleSheet.create({
         backgroundColor: "#fafafa",
     },
 
-    flatlistItens: {
-        paddingHorizontal: 14,
-        backgroundColor: 'white',
-    },
-
     card: {
-        height: 80,
-        width: 250,
+        paddingVertical: 32,
+        width: "100%",
         borderRadius: 15,
-        alignSelf: 'center',
         backgroundColor: 'white',
         borderWidth: 2,
         borderColor: '#f4f4f7',
         flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 25
     },
 
     cash: {
-        height: 80,
-        width: 250,
+        paddingVertical: 32,
+        width: "100%",
         borderRadius: 15,
-        alignSelf: 'center',
         backgroundColor: 'white',
         borderWidth: 2,
         borderColor: '#f4f4f7',
         flexDirection: 'row',
-        marginTop: 10,
-        marginBottom: 15
-    },
-
-    box: {
-        height: 60,
-        width: "100%",
-        marginHorizontal: 35,
-        borderRadius: 10,
-        backgroundColor: "white",
-        // flexDirection: 'row',
-        shadowColor: '#000',
-        shadowOffset: { width: 30, height: 12 },
-        shadowOpacity: 0.00,
-        shadowRadius: 12.00,
-        elevation: 8,
-        marginLeft: 5,
-        marginRight: 5,
-        marginTop: 25,
+        justifyContent: 'space-between',
+        marginTop: 10
     },
 
     boxOpen: {
         flexGrow: 1,
-        marginHorizontal: 30,
         borderRadius: 10,
         backgroundColor: "white",
-        // flexDirection: 'row',
-        shadowColor: '#000',
-        shadowOffset: { width: 30, height: 12 },
-        shadowOpacity: 0.00,
-        shadowRadius: 12.00,
-        elevation: 8,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
+        // marginHorizontal: 30,
+        elevation: 2,
         marginBottom: 14
     },
 
-    products: {
-        flexGrow: 1,
-        marginHorizontal: 30,
-        borderRadius: 10,
+    box: {
+        width: "100%",
         backgroundColor: "white",
-        shadowColor: '#000',
-        shadowOffset: { width: 30, height: 12 },
-        shadowOpacity: 0.00,
-        shadowRadius: 12.00,
-        elevation: 8,
-        marginBottom: 14
-    },
+        borderRadius: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
 
-    payment: {
-        flexGrow: 1,
-        marginHorizontal: 30,
-        borderRadius: 10,
-        backgroundColor: "white",
-        // flexDirection: 'row',
-        shadowColor: '#000',
-        shadowOffset: { width: 30, height: 12 },
-        shadowOpacity: 0.00,
-        shadowRadius: 12.00,
-        elevation: 8,
+        elevation: 3,
     },
 })

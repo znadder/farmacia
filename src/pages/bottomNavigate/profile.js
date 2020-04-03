@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image, Dimensions, ImageBackground } from 'react-native';
 
 const { width } = Dimensions.get("window");
 
@@ -22,38 +22,26 @@ export default class profile extends Component {
             <View style={{ flex: 1 }}>
 
                 <View style={styles.header}>
-                    <Image style={{ height: 28, width: 28, marginLeft: 10 }}
-                        source={require("./../../assets/menu.png")} />
-                    <Text style={{ color: "#1f1f1f", fontWeight: 'bold', fontSize: 14, marginLeft: 120 }}>PROFILE</Text>
+                    {/* <Image style={{ height: 28, width: 28, marginLeft: 10 }}
+                        source={require("./../../assets/menu.png")} /> */}
+                    <Text style={{ color: "#1f1f1f", fontWeight: 'bold', fontSize: 14 }}>PROFILE</Text>
                 </View>
 
-                <View style={styles.container}>
+                <View style={{ backgroundColor: 'fcfeff' }}>
 
-                    <View style={{ flex: 1, backgroundColor: 'fcfeff' }}>
-                        <Image style={{ height: "70%", width: "100%" }}
+                    <View style={{ backgroundColor: 'fcfeff' }}>
+
+                        <Image style={{ height: 140, width: "100%" }}
                             source={require("./../../assets/backgroundProfile.png")} />
 
-                        <TouchableOpacity style={{ alignSelf: 'center', position: 'absolute', marginTop: 80, backgroundColor: '#ff4a53', height: 105, width: 105, borderRadius: 50, alignItems: 'center', justifyContent: 'center' }}>
+                        <TouchableOpacity style={{ position: 'absolute', marginTop: 80, alignSelf: 'center', backgroundColor: '#ff4a53', height: 105, width: 105, borderRadius: 50, alignItems: 'center', justifyContent: 'center' }}>
                             <Image style={{ height: 100, width: 100, borderRadius: 50 }}
                                 source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHxrzpnb9vBUszUOHV3buKsmiePRMjyvc8IPZrMUw-4twHh_6J&s" }} />
                         </TouchableOpacity>
 
                     </View>
 
-                    <View style={{ flex: 2, backgroundColor: 'fcfeff', alignItems: 'center', paddingHorizontal: 20 }}>
-
-                        <TouchableOpacity style={styles.box}
-                            onPress={() => { alert('aa') }}>
-
-                            <Image style={{ height: 28, width: 28, position: 'absolute', marginVertical: 12, marginLeft: 15 }}
-                                source={require("./../../assets/userName.png")} />
-
-                            <Text style={{ color: '#1f1f1f', fontSize: 14, marginLeft: 10, position: 'absolute', marginVertical: 16, marginLeft: 52, }}>Basic Info</Text>
-
-                            <Image style={{ height: 25, width: 25, position: 'absolute', marginVertical: 14, marginLeft: 280 }}
-                                source={require("./../../assets/arrowrightcircle.png")} />
-
-                        </TouchableOpacity>
+                    <View style={{ backgroundColor: 'fcfeff', alignItems: 'center', paddingHorizontal: 20, marginTop: 70 }}>
 
                         <TouchableOpacity style={styles.box}
                             onPress={() => { alert('aa') }}>
@@ -65,7 +53,7 @@ export default class profile extends Component {
 
                             <Image style={{ height: 25, width: 25, position: 'absolute', marginVertical: 14, marginLeft: 280 }}
                                 source={require("./../../assets/arrowrightcircle.png")} />
-                                
+
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.box}
@@ -78,7 +66,7 @@ export default class profile extends Component {
 
                             <Image style={{ height: 25, width: 25, position: 'absolute', marginVertical: 14, marginLeft: 280 }}
                                 source={require("./../../assets/arrowrightcircle.png")} />
-                                
+
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.box}
@@ -91,7 +79,7 @@ export default class profile extends Component {
 
                             <Image style={{ height: 25, width: 25, position: 'absolute', marginVertical: 14, marginLeft: 280 }}
                                 source={require("./../../assets/arrowrightcircle.png")} />
-                                
+
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.box}
@@ -104,7 +92,7 @@ export default class profile extends Component {
 
                             <Image style={{ height: 25, width: 25, position: 'absolute', marginVertical: 14, marginLeft: 280 }}
                                 source={require("./../../assets/arrowrightcircle.png")} />
-                                
+
                         </TouchableOpacity>
 
                     </View>
@@ -122,10 +110,11 @@ export default class profile extends Component {
 const styles = StyleSheet.create({
 
     header: {
-        flex: 1,
         backgroundColor: "white",
         alignItems: 'center',
+        justifyContent: 'center',
         flexDirection: 'row',
+        paddingVertical: 16,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -134,10 +123,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.22,
         shadowRadius: 2.22,
         elevation: 3,
-    },
-
-    container: {
-        flex: 10,
     },
 
     box: {

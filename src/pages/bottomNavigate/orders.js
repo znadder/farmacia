@@ -200,7 +200,7 @@ export default class orders extends Component {
 
                         </View>
 
-                        <View style={{ backgroundColor: '#f1f1f1', width: "0.6%", height: "100%" }}>
+                        <View style={{ backgroundColor: '#f1f1f1', width: "0.6%", height: "115%" }}>
 
                         </View>
 

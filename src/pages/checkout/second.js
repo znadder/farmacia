@@ -22,7 +22,7 @@ export default class second extends Component {
             <View style={{ flex: 1 }}>
                 <View style={styles.header}>
                     <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 15 }}
-                        onPress={() => { this.props.navigation.navigate('first') }}>
+                        onPress={() => { this.props.navigation.navigate('routesBottom') }}>
                         <Image style={{ height: 18, width: 18 }}
                             source={require("./../../assets/arrowleft.png")} />
                     </TouchableOpacity>
