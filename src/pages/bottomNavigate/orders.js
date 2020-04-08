@@ -250,7 +250,7 @@ export default class orders extends Component {
                     item.verify == 'Verified' &&
 
                     < TouchableOpacity style={{ paddingVertical: 6, width: "85%", backgroundColor: '#ffffff', borderBottomStartRadius: 8, borderBottomEndRadius: 8, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', borderTopWidth: 1, borderColor: '#f1f1f1', alignSelf: 'center', shadowColor: "#000", shadowOffset: { width: 0, height: 1, }, shadowOpacity: 0.20, shadowRadius: 1.41, elevation: 2, }}
-                        onPress={() => { alert("Adicionado no carrinho!") }}>
+                        onPress={() => { this.props.navigation.navigate('infosCheckout') }}>
                         <Image style={{ height: 25, width: 25 }}
                             source={require("./../../assets/cart.png")} />
                         <Text style={{ fontSize: 14, color: '#ff4c51', marginLeft: 5, alignSelf: 'center' }}>Proceed to payment</Text>

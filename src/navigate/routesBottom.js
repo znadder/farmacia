@@ -9,6 +9,7 @@ import index from './../pages/find/index';
 import orders from './../pages/bottomNavigate/orders';
 import first from './../pages/checkout/first';
 
+
 // import AIcon from '../components/index';
 
 const App = createBottomTabNavigator(
@@ -37,12 +38,6 @@ const App = createBottomTabNavigator(
 
       }
     },
-    // Settings: {
-    //   screen: settingsPage,
-    //   navigationOptions: {
-
-    //   }
-    // }
 
   },
   {
