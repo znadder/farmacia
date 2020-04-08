@@ -188,63 +188,12 @@ export default class orders extends Component {
             num = this.state.total_value
             image = require("./../../assets/money.png")
         } else if (item.name == 'continue') {
-            return (
-                <View style={{ backgroundColor: '#fcfeff', paddingTop: "35%", paddingBottom: "15%" }}>
-
-                    <View style={{ paddingBottom: 15 }}>
-
-                        {
-                            this.state.prescriptionTotal > 0 &&
-
-                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                                onPress={() => this.setState({ checked: !this.state.checked })}>
-                                {
-                                    this.state.checked ?
-                                        <Image style={{ height: 30, width: 30 }} source={require('./../../assets/circleselect.png')} />
-                                        :
-                                        <Image style={{ height: 30, width: 30 }} source={require('./../../assets/circleunselect.png')} />
-                                }
-
-                                <Text style={{ color: '#6d707b', fontSize: 15, marginLeft: 5 }}>I have prescription files to upload</Text>
-
-                            </TouchableOpacity>
-                        }
-
-                    </View>
-
-                    <TouchableOpacity
-                        style={{ paddingBottom: 10 }}
-                        activeOpacity={this.state.checked ? 0.2 : 1}
-                        onPress={() => {
-                            if (this.state.checked) {
-                                alert('passou')
-                            }
-                        }}>
-
-                        {
-                            this.state.checked ?
-                                <Image style={{ height: 40, width: "100%", borderRadius: 20 }}
-                                    source={require("./../../assets/background.png")} />
-                                :
-                                <View style={{ height: 40, width: "100%", borderRadius: 20, backgroundColor: '#eaeaea' }}></View>
-                        }
-
-                        {
-                            this.state.checked ?
-                                <Text style={{ color: '#f1f1f1', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
-                                :
-                                <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
-                        }
-
-                    </TouchableOpacity>
-
-                </View>
-            )
+            return null;
         }
 
         return (
 
-            <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20, marginBottom: 15, paddingVertical: 1 }}>
+            <View style={{flexGrow: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20, marginBottom: 15, paddingVertical: 1 }}>
 
                 <View style={styles.contentInfos}>
 
@@ -350,29 +299,72 @@ export default class orders extends Component {
     render() {
         return (
             <View style={{ flexGrow: 1 }}>
-
                 <View style={styles.header}>
-
                     <Text style={{ color: "#1f1f1f", fontWeight: 'bold', fontSize: 14 }}>CHECKOUT</Text>
-
                 </View>
 
                 <View style={styles.container}>
 
                     <View style={styles.boxName}>
-
                         <Text style={{ color: '#1f1f1f', fontSize: 22, fontWeight: 'bold' }}>Hi, Michael</Text>
                         <Text style={{ color: '#9699a2', fontSize: 18 }}>Here is summary of your order</Text>
-
                     </View>
 
                     <FlatList
-                        style={{ backgroundColor: '#fcfeff' }}
+                        style={{ flex: 1 }}
+                        contentContainerStyle={{ paddingBottom: "30%" }}
                         data={this.state.box_options}
                         keyExtractor={item => item.name}
                         renderItem={this.renderSeparedBlock}
+                        showsVerticalScrollIndicator={false}
                     />
 
+                    <View style={{ flex: 1, position: "absolute", bottom: 0, paddingBottom: 30, paddingTop: 5, width: "100%", paddingHorizontal: 10, backgroundColor: "white" }}>
+                        <View style={{  }}>
+                            {
+                                this.state.prescriptionTotal > 0 &&
+
+                                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                    onPress={() => this.setState({ checked: !this.state.checked })}>
+                                    {
+                                        this.state.checked ?
+                                            <Image style={{ height: 30, width: 30 }} source={require('./../../assets/circleselect.png')} />
+                                            :
+                                            <Image style={{ height: 30, width: 30 }} source={require('./../../assets/circleunselect.png')} />
+                                    }
+
+                                    <Text style={{ color: '#6d707b', fontSize: 15, marginLeft: 5 }}>I have prescription files to upload</Text>
+
+                                </TouchableOpacity>
+                            }
+                        </View>
+
+                        <TouchableOpacity
+                            style={{ }}
+                            activeOpacity={this.state.checked ? 0.2 : 1}
+                            onPress={() => {
+                                if (this.state.checked) {
+                                    alert('passou')
+                                }
+                            }}>
+
+                            {
+                                this.state.checked ?
+                                    <Image style={{ height: 40, width: "100%", borderRadius: 20 }}
+                                        source={require("./../../assets/background.png")} />
+                                    :
+                                    <View style={{ height: 40, width: "100%", borderRadius: 20, backgroundColor: '#eaeaea' }}></View>
+                            }
+
+                            {
+                                this.state.checked ?
+                                    <Text style={{ color: '#f1f1f1', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
+                                    :
+                                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
+                            }
+
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         )
