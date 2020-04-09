@@ -193,7 +193,7 @@ export default class orders extends Component {
 
         return (
 
-            <View style={{flexGrow: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20, marginBottom: 15, paddingVertical: 1 }}>
+            <View style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20, marginBottom: 15, paddingVertical: 1 }}>
 
                 <View style={styles.contentInfos}>
 
@@ -320,7 +320,7 @@ export default class orders extends Component {
                     />
 
                     <View style={{ flex: 1, position: "absolute", bottom: 0, paddingBottom: 30, paddingTop: 5, width: "100%", paddingHorizontal: 10, backgroundColor: "white" }}>
-                        <View style={{  }}>
+                        <View style={{}}>
                             {
                                 this.state.prescriptionTotal > 0 &&
 
@@ -339,31 +339,52 @@ export default class orders extends Component {
                             }
                         </View>
 
-                        <TouchableOpacity
-                            style={{ }}
-                            activeOpacity={this.state.checked ? 0.2 : 1}
-                            onPress={() => {
-                                if (this.state.checked) {
-                                    alert('passou')
+                        {this.state.prescriptionTotal > 0 ?
+
+                            <TouchableOpacity
+                                style={{ marginTop: 10 }}
+                                activeOpacity={this.state.checked ? 0.2 : 1}
+                                onPress={() => {
+                                    if (this.state.checked) {
+                                        this.props.navigation.navigate('prescriptionCheckout')
+                                    }
+                                }}>
+
+                                {
+                                    this.state.checked ?
+                                        <Image style={{ height: 40, width: "100%", borderRadius: 20 }}
+                                            source={require("./../../assets/background.png")} />
+                                        :
+                                        <View style={{ height: 40, width: "100%", borderRadius: 20, backgroundColor: '#eaeaea' }}></View>
                                 }
-                            }}>
 
-                            {
-                                this.state.checked ?
-                                    <Image style={{ height: 40, width: "100%", borderRadius: 20 }}
-                                        source={require("./../../assets/background.png")} />
-                                    :
-                                    <View style={{ height: 40, width: "100%", borderRadius: 20, backgroundColor: '#eaeaea' }}></View>
-                            }
+                                {
+                                    this.state.checked ?
+                                        <Text style={{ color: '#f1f1f1', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
+                                        :
+                                        <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
+                                }
 
-                            {
-                                this.state.checked ?
-                                    <Text style={{ color: '#f1f1f1', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
-                                    :
-                                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
-                            }
+                            </TouchableOpacity>
 
-                        </TouchableOpacity>
+                            :
+
+                            <TouchableOpacity
+                                style={{ marginTop: 10 }}
+                                activeOpacity={0.2}
+                                onPress={() => {
+                                    this.props.navigation.navigate('finalCheckout')
+                                }}>
+
+                                <Image style={{ height: 40, width: "100%", borderRadius: 20 }}
+                                    source={require("./../../assets/background.png")} />
+
+                                <Text style={{ color: '#f1f1f1', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
+
+                            </TouchableOpacity>
+
+                        }
+
                     </View>
                 </View>
             </View>
