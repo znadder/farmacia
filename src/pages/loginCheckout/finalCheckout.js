@@ -1,22 +1,29 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image, Dimensions, FlatList } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { CheckBox } from 'react-native-elements';
 
 const { width } = Dimensions.get("window");
 
-export default class finalCheckout extends Component {
+export default class orders extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            selected: '',
 
-            basic_infos: {
-                name: 'Arthur',
-                number: '33485352',
-                location: 'Londrina',
-                type_building: 'Casa',
-            },
+            show_itensList: false,
+
+            currentOrderSelecet: -1,
+
+            prescriptionTotal: 0,
+
+            total_value: 0,
+
+            value_total: 0,
+
+            checked: false,
 
             orders: [
                 {
@@ -31,50 +38,42 @@ export default class finalCheckout extends Component {
                     product_price: 10,
                     qnt: 2,
                 },
+            ],
+
+            box_options: [
                 {
-                    product_Id: 3,
-                    product_Name: 'Paracetamol',
-                    product_price: 5,
-                    qnt: 3,
+                    id: 1,
+                    name: "basic_Infos",
+                    description: "Basic Info & Address",
                 },
                 {
-                    product_Id: 4,
-                    product_Name: 'Ibiprofeno',
-                    product_price: 9,
-                    qnt: 1,
+                    id: 2,
+                    name: "shipping",
+                    description: "Shipping",
+                },
+                {
+                    id: 3,
+                    name: "order",
+                    description: "Your Order",
+                },
+                {
+                    id: 4,
+                    name: "payment",
+                    description: "Payment Method",
                 },
             ],
 
-            payment_option_card: false,
-            payment_option_cash: false,
+            basic_infos: [{
+                name: 'Arthur',
+                number: '33485352',
+                location: 'Londrina',
+                type_building: 'Casa',
+            }],
 
-            show_info: false,
-            show_products: false,
-            show_payment: false,
-
-            value_total: 0,
         }
     }
 
     componentDidMount() {
-        this.calcTotal()
-        // this.getInfos()
-    }
-
-    getInfos = () => {
-        this.setState({
-            basic_infos: {
-                ...this.state.basic_infos,
-                name: this.props.navigation.getParam('name'),
-                number: this.props.navigation.getParam('number'),
-                location: this.props.navigation.getParam('location'),
-                type_building: this.props.navigation.getParam('type'),
-            }
-        })
-    }
-
-    calcTotal = () => {
-
         let sum = 0;
 
         if (this.state.orders.length) {
@@ -87,17 +86,50 @@ export default class finalCheckout extends Component {
         }
     }
 
-    renderItem = ({ item }) => {
-        console.log(item)
+    renderBasicInfos = ({ item }) => {
+        return (
+            <View style={{ width: "100%", backgroundColor: "white", justifyContent: 'center' }}>
+                <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold' }}>Name</Text>
+                <Text style={{ fontSize: 16, color: '#7b7b7b', }}>{this.state.basic_infos[0].name}</Text>
+                <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', paddingTop: 6 }}>Phone Number</Text>
+                <Text style={{ fontSize: 16, color: '#7b7b7b' }}>{this.state.basic_infos[0].number}</Text>
+                <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', paddingTop: 6 }}>State - Country</Text>
+                <Text style={{ fontSize: 16, color: '#7b7b7b' }}>{this.state.basic_infos[0].location} - Brazil</Text>
+                <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', paddingTop: 6 }}>Type building</Text>
+                <Text style={{ fontSize: 16, color: '#7b7b7b' }}>{this.state.basic_infos[0].type_building}</Text>
+            </View>
+        )
+    }
+
+    renderPrescription = ({ item }) => {
+
+        if (item.prescription == true) {
+            return (
+                <View style={{ width: "100%", backgroundColor: "white", paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: '#f1f1f1', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+
+                    <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#1f1f1f' }}>{item.name} {item.weight}</Text>
+                    <TouchableOpacity
+                        onPress={() => { alert("Still in development") }}>
+                        <Image style={{ height: 13, width: 13, marginRight: 5 }}
+                            source={require("./../../assets/x.png")} />
+                    </TouchableOpacity>
+
+                </View>
+            )
+        }
+    }
+
+    renderOrder = ({ item }) => {
         let total = item.qnt * item.product_price
         return (
-            <View style={{ paddingVertical: 16, borderBottomColor: '#f3f3f7', borderBottomWidth: 1.5 }}>
 
-                <Text style={{ fontSize: 15, color: '#1f1f1f', fontWeight: 'bold', marginTop: 4 }}>{item.product_price} DHS</Text>
+            <View style={{ width: "100%", backgroundColor: "white", justifyContent: 'center', paddingVertical: 15, borderBottomWidth: 1, borderBottomColor: '#f1f1f1' }}>
 
-                <Text style={{ fontSize: 13, color: '#7b7b7b', marginTop: 6 }}>{item.product_Name}</Text>
+                <Text style={{ fontSize: 15, color: '#1f1f1f', fontWeight: 'bold' }}>{item.product_price} DHS</Text>
 
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+                <Text style={{ fontSize: 13, color: '#7b7b7b', paddingVertical: 4 }}>{item.product_Name}</Text>
+
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
 
                     <Text style={{ fontSize: 13, color: '#1f1f1f' }}>Qty {item.qnt}</Text>
 
@@ -105,225 +137,281 @@ export default class finalCheckout extends Component {
                         source={require("./../../assets/largearrowdown.png")} />
 
                     <Text style={{ fontSize: 13, color: '#1f1f1f' }}>Total {total}Dhs / Description 5 pens</Text>
+
                 </View>
             </View>
         )
     }
 
-    render() {
-
+    renderPayment = ({ item }) => {
         return (
-            <View style={{ flex: 1 }}>
-                <View style={styles.header}>
 
-                    <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 15 }}
-                        onPress={() => { this.props.navigation.navigate('infosCheckout') }}>
+            <View style={{ width: "100%", backgroundColor: "white", justifyContent: 'center', paddingTop: 15 }}>
 
-                        <Image style={{ height: 18, width: 18 }}
-                            source={require("./../../assets/arrowleft.png")} />
+                <TouchableOpacity style={styles.card}
+                    onPress={() => {
+                        this.setState({ payment_option_card: !this.state.payment_option_card })
 
-                    </TouchableOpacity>
+                        if (this.state.payment_option_cash = true) {
+                            this.setState({ payment_option_cash: !this.state.payment_option_cash })
+                        }
+                    }}>
 
-                    <Text style={{ color: "#1f1f1f", fontWeight: 'bold', fontSize: 14, alignSelf: 'center', marginLeft: 114 }}>CHECKOUT</Text>
-
-                </View>
-
-                <ScrollView
-                    contentContainerStyle={{ paddingVertical: 14, paddingHorizontal: 20 }}
-                    style={styles.container}>
-
-                        <Text>Ola</Text>
-
-                    <View style={styles.boxOpen}>
-
-                        <TouchableOpacity style={{ alignItems: 'flex-start', paddingVertical: 15, paddingHorizontal: 15 }}
-
-                            onPress={() => { this.setState({ show_info: !this.state.show_info }) }}>
-
-                            <Text style={{ fontSize: 18, color: '#1f1f1f', fontWeight: 'bold' }}>Basic Info & Address</Text>
-
-                            {
-                                this.state.show_info ?
-
-                                    <Image style={{ height: 30, width: 30, position: 'absolute', right: -12, marginTop: 14 }}
-                                        source={require("./../../assets/arrowUpWhite.png")} />
-
-                                    :
-
-                                    <Image style={{ height: 30, width: 30, position: 'absolute', right: -12, marginTop: 14 }}
-                                        source={require("./../../assets/arrowdownWhite.png")} />
-                            }
-
-                            {
-                                this.state.show_info &&
-                                <>
-                                    <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', marginTop: 10, marginLeft: 2 }}>Name</Text>
-                                    <Text style={{ fontSize: 16, color: '#7b7b7b', marginLeft: 2 }}>{this.state.basic_infos.name}</Text>
-                                    <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', marginTop: 16, marginLeft: 2 }}>Phone Number</Text>
-                                    <Text style={{ fontSize: 16, color: '#7b7b7b', marginLeft: 2 }}>{this.state.basic_infos.number}</Text>
-                                    <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', marginTop: 16, marginLeft: 2 }}>State - Country</Text>
-                                    <Text style={{ fontSize: 16, color: '#7b7b7b', marginLeft: 2 }}>{this.state.basic_infos.location} - Brazil</Text>
-                                    <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', marginTop: 16, marginLeft: 2 }}>Type building</Text>
-                                    <Text style={{ fontSize: 16, color: '#7b7b7b', marginLeft: 2 }}>{this.state.basic_infos.type_building}</Text>
-                                </>
-                            }
-
-                        </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20 }}>
+                        <Image style={{ height: 25, width: 28 }}
+                            source={require("./../../assets/card.png")} />
+                        <Text style={{ fontSize: 15, color: '#7b7b7b', fontWeight: 'normal', marginLeft: 6 }}>Card</Text>
                     </View>
 
-                    <View style={styles.boxOpen}>
+                    {
+                        this.state.payment_option_card ?
+                            <Image style={{ height: 25, width: 25, marginRight: 18 }}
+                                source={require("./../../assets/circleselect.png")} />
+                            :
+                            <Image style={{ height: 25, width: 25, marginRight: 18 }}
+                                source={require("./../../assets/circleunselect.png")} />
+                    }
 
-                        <TouchableOpacity style={{ alignItems: 'flex-start', paddingVertical: 15, paddingHorizontal: 15 }}
-                            onPress={() => { this.setState({ show_products: !this.state.show_products }) }}>
+                </TouchableOpacity>
 
-                            <Text style={{ fontSize: 18, color: '#1f1f1f', fontWeight: 'bold' }}>Your Order</Text>
+                <TouchableOpacity style={styles.cash}
+                    onPress={() => {
+                        this.setState({ payment_option_cash: !this.state.payment_option_cash })
 
-                            {
-                                this.state.show_products ?
+                        if (this.state.payment_option_card = true) {
+                            this.setState({ payment_option_card: !this.state.payment_option_card })
+                        }
+                    }}>
 
-                                    <Image style={{ height: 30, width: 30, position: 'absolute', right: -12, marginTop: 14 }}
-                                        source={require("./../../assets/arrowUpWhite.png")} />
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20 }}>
 
-                                    :
+                        <Image style={{ height: 25, width: 28 }}
+                            source={require("./../../assets/cash.png")} />
+                        <Text style={{ fontSize: 15, color: '#7b7b7b', fontWeight: 'normal', marginLeft: 6 }}>Cash</Text>
 
-                                    <Image style={{ height: 30, width: 30, position: 'absolute', right: -12, marginTop: 14 }}
-                                        source={require("./../../assets/arrowdownWhite.png")} />
-                            }
+                    </View>
 
-                            {
-                                this.state.show_products &&
+                    {
+                        this.state.payment_option_cash ?
+                            <Image style={{ height: 25, width: 25, marginRight: 18 }}
+                                source={require("./../../assets/circleselect.png")} />
+                            :
+                            <Image style={{ height: 25, width: 25, marginRight: 18 }}
+                                source={require("./../../assets/circleunselect.png")} />
+                    }
+                </TouchableOpacity>
 
-                                <>
+            </View >
+        )
+    }
 
-                                    <FlatList
-                                        style={{ width: "100%" }}
-                                        contentContainerStyle={{ paddingVertical: 10 }}
-                                        data={this.state.orders}
-                                        keyExtractor={item => item.name}
-                                        renderItem={this.renderItem}
-                                    />
+    renderSeparedBlock = ({ item }) => {
 
+        return (
+
+            <View style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20, marginBottom: 15, paddingVertical: 1 }}>
+
+                <View style={styles.contentInfos}>
+
+                    {/* view que alinha os dois blocos  */}
+                    <TouchableOpacity style={this.state.currentOrderSelecet == item.id ? styles.firstBoxOpen : styles.firstBox}
+                        onPress={() => {
+                            this.setState({
+                                currentOrderSelecet: this.state.currentOrderSelecet == item.id ? -1 : item.id,
+                                show_itensList: !this.state.show_itensList
+                            })
+                        }}>
+
+                        {
+                            this.state.currentOrderSelecet == item.id ?
+
+                                <Image style={{ height: 30, width: 30, position: 'absolute', right: -12, marginTop: 14 }}
+                                    source={require("./../../assets/arrowUpWhite.png")} />
+
+                                :
+
+                                <Image style={{ height: 30, width: 30, position: 'absolute', right: -12, alignSelf: 'center' }}
+                                    source={require("./../../assets/arrowdownWhite.png")} />
+                        }
+
+                        <View style={{ flexDirection: 'row' }}>
+
+                            <Text style={{ color: '#1f1f1f', fontSize: 16, fontWeight: 'bold' }}>{item.description}</Text>
+
+                        </View>
+
+                        {
+                            this.state.currentOrderSelecet == item.id && item.name == 'basic_Infos' &&
+
+                            <>
+                                <FlatList
+                                    style={{ paddingTop: 10, paddingBottom: 5 }}
+                                    contentContainerStyle={{}}
+                                    data={this.state.basic_infos}
+                                    keyExtractor={item => item.name}
+                                    renderItem={this.renderBasicInfos}
+                                />
+                            </>
+                        }
+
+                        {
+                            this.state.currentOrderSelecet == item.id && item.name == 'shipping' &&
+
+                            <>
+                                <FlatList
+                                    style={{ paddingTop: 10, paddingBottom: 5 }}
+                                    contentContainerStyle={{}}
+                                    data={this.state.items_cart}
+                                    keyExtractor={item => item.name}
+                                    renderItem={this.renderPrescription}
+                                />
+                            </>
+                        }
+
+                        {
+                            this.state.currentOrderSelecet == item.id && item.name == 'order' &&
+
+                            <>
+                                <FlatList
+                                    style={{ paddingTop: 10, paddingBottom: 5 }}
+                                    contentContainerStyle={{}}
+                                    data={this.state.orders}
+                                    keyExtractor={item => item.name}
+                                    renderItem={this.renderOrder}
+                                />
+                                <View style={{ flexGrow: 1 }}>
                                     <View style={{ flexDirection: 'row' }}>
-                                        <View style={{ width: "50%", paddingVertical: 8 }}>
+                                        <View style={{ width: "50%", paddingVertical: 6 }}>
 
                                             <Text style={{ fontSize: 15, color: '#5e5e5e' }}>Shipping</Text>
                                             <Text style={{ fontSize: 15, color: '#1f1f1f', fontWeight: 'bold', marginTop: 4 }}>Total</Text>
 
-
                                         </View>
 
-                                        <View style={{ width: "50%", paddingVertical: 8, alignItems: 'flex-end' }}>
+                                        <View style={{ width: "50%", paddingVertical: 6, alignItems: 'flex-end' }}>
                                             <Text style={{ fontSize: 14, color: '#1dc6d2' }}>Free</Text>
                                             <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold' }}>{this.state.value_total} Dhs</Text>
 
                                         </View>
                                     </View>
+                                </View>
 
+                            </>
+                        }
 
-                                </>
-                            }
+                        {
+                            this.state.currentOrderSelecet == item.id && item.name == 'payment' &&
 
-                        </TouchableOpacity>
+                            <>
+                                <FlatList
+                                    style={{ paddingTop: 10, paddingBottom: 5 }}
+                                    contentContainerStyle={{}}
+                                    data={this.state.basic_infos}
+                                    keyExtractor={item => item.name}
+                                    renderItem={this.renderPayment}
+                                />
+                            </>
+                        }
+
+                    </TouchableOpacity>
+
+                </View>
+
+            </View >
+
+        )
+    }
+
+    render() {
+        return (
+            <View style={{ flexGrow: 1 }}>
+                <View style={styles.header}>
+                    <Text style={{ color: "#1f1f1f", fontWeight: 'bold', fontSize: 14 }}>CHECKOUT</Text>
+                </View>
+
+                <View style={styles.container}>
+
+                    <View style={styles.boxName}>
+                        <Text style={{ color: '#1f1f1f', fontSize: 20, fontWeight: 'bold' }}>Please review your order</Text>
                     </View>
 
-                    <View style={styles.boxOpen}>
+                    <FlatList
+                        style={{ flex: 1 }}
+                        contentContainerStyle={{ paddingBottom: "30%" }}
+                        data={this.state.box_options}
+                        keyExtractor={item => item.name}
+                        renderItem={this.renderSeparedBlock}
+                        showsVerticalScrollIndicator={false}
+                    />
 
-                        <TouchableOpacity style={{ alignItems: 'flex-start', paddingVertical: 15, paddingHorizontal: 15 }}
-                            onPress={() => { this.setState({ show_payment: !this.state.show_payment }) }}>
-
-                            <Text style={{ fontSize: 18, color: '#1f1f1f', fontWeight: 'bold' }}>Payment Method</Text>
-
-
+                    <View style={{ flex: 1, position: "absolute", bottom: 0, paddingBottom: 30, paddingTop: 5, width: "100%", paddingHorizontal: 10, backgroundColor: "white" }}>
+                        <View style={{}}>
                             {
-                                this.state.show_payment ?
+                                this.state.prescriptionTotal > 0 &&
 
-                                    <Image style={{ height: 30, width: 30, position: 'absolute', right: -12, marginTop: 14 }}
-                                        source={require("./../../assets/arrowUpWhite.png")} />
+                                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                    onPress={() => this.setState({ checked: !this.state.checked })}>
+                                    {
+                                        this.state.checked ?
+                                            <Image style={{ height: 30, width: 30 }} source={require('./../../assets/circleselect.png')} />
+                                            :
+                                            <Image style={{ height: 30, width: 30 }} source={require('./../../assets/circleunselect.png')} />
+                                    }
 
-                                    :
+                                    <Text style={{ color: '#6d707b', fontSize: 15, marginLeft: 5 }}>I have prescription files to upload</Text>
 
-                                    <Image style={{ height: 30, width: 30, position: 'absolute', right: -12, marginTop: 14 }}
-                                        source={require("./../../assets/arrowdownWhite.png")} />
+                                </TouchableOpacity>
                             }
+                        </View>
 
-                            {
-                                this.state.show_payment &&
+                        {this.state.prescriptionTotal > 0 ?
 
-                                <>
+                            <TouchableOpacity
+                                style={{ marginTop: 10 }}
+                                activeOpacity={this.state.checked ? 0.2 : 1}
+                                onPress={() => {
+                                    if (this.state.checked) {
+                                        this.props.navigation.navigate('prescriptionCheckout')
+                                    }
+                                }}>
 
-                                    <TouchableOpacity style={styles.card}
-                                        onPress={() => {
-                                            this.setState({ payment_option_card: !this.state.payment_option_card })
+                                {
+                                    this.state.checked ?
+                                        <Image style={{ height: 40, width: "100%", borderRadius: 20 }}
+                                            source={require("./../../assets/background.png")} />
+                                        :
+                                        <View style={{ height: 40, width: "100%", borderRadius: 20, backgroundColor: '#eaeaea' }}></View>
+                                }
 
-                                            if (this.state.payment_option_cash = true) {
-                                                this.setState({ payment_option_cash: !this.state.payment_option_cash })
-                                            }
-                                        }}>
+                                {
+                                    this.state.checked ?
+                                        <Text style={{ color: '#f1f1f1', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
+                                        :
+                                        <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
+                                }
 
-                                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20 }}>
-                                            <Image style={{ height: 25, width: 28 }}
-                                                source={require("./../../assets/card.png")} />
-                                            <Text style={{ fontSize: 15, color: '#7b7b7b', fontWeight: 'normal', marginLeft: 6 }}>Card</Text>
-                                        </View>
+                            </TouchableOpacity>
 
-                                        {
-                                            this.state.payment_option_card ?
-                                                <Image style={{ height: 25, width: 25, marginRight: 18 }}
-                                                    source={require("./../../assets/circleselect.png")} />
-                                                :
-                                                <Image style={{ height: 25, width: 25, marginRight: 18 }}
-                                                    source={require("./../../assets/circleunselect.png")} />
-                                        }
+                            :
 
-                                    </TouchableOpacity>
+                            <TouchableOpacity
+                                style={{ marginTop: 10 }}
+                                activeOpacity={0.2}
+                                onPress={() => {
+                                    this.props.navigation.navigate('finalCheckout')
+                                }}>
 
-                                    <TouchableOpacity style={styles.cash}
-                                        onPress={() => {
-                                            this.setState({ payment_option_cash: !this.state.payment_option_cash })
+                                <Image style={{ height: 40, width: "100%", borderRadius: 20 }}
+                                    source={require("./../../assets/background.png")} />
 
-                                            if (this.state.payment_option_card = true) {
-                                                this.setState({ payment_option_card: !this.state.payment_option_card })
-                                            }
-                                        }}>
+                                <Text style={{ color: '#f1f1f1', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
 
-                                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20 }}>
+                            </TouchableOpacity>
 
-                                            <Image style={{ height: 25, width: 28 }}
-                                                source={require("./../../assets/cash.png")} />
-                                            <Text style={{ fontSize: 15, color: '#7b7b7b', fontWeight: 'normal', marginLeft: 6 }}>Cash</Text>
-
-                                        </View>
-
-                                        {
-                                            this.state.payment_option_cash ?
-                                                <Image style={{ height: 25, width: 25, marginRight: 18 }}
-                                                    source={require("./../../assets/circleselect.png")} />
-                                                :
-                                                <Image style={{ height: 25, width: 25, marginRight: 18 }}
-                                                    source={require("./../../assets/circleunselect.png")} />
-                                        }
-                                    </TouchableOpacity>
-
-                                </>
-                            }
-
-                        </TouchableOpacity>
+                        }
 
                     </View>
-
-                    <View style={{ marginTop: 345 }}>
-                        <TouchableOpacity style={styles.box}
-                            onPress={() => { this.props.navigation.navigate('routesBottom') }}>
-
-                            <Image style={{ height: 40, width: "100%", borderRadius: 20 }}
-                                source={require("./../../assets/background.png")} />
-
-                            <Text style={{ color: '#f1f1f1', fontSize: 14, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONFIRM</Text>
-
-                        </TouchableOpacity>
-                    </View>
-
-                </ScrollView>
+                </View>
             </View>
         )
     }
@@ -334,6 +422,8 @@ const styles = StyleSheet.create({
     header: {
         paddingVertical: 20,
         backgroundColor: "white",
+        alignItems: 'center',
+        justifyContent: 'center',
         flexDirection: 'row',
         shadowColor: "#000",
         shadowOffset: {
@@ -346,8 +436,99 @@ const styles = StyleSheet.create({
     },
 
     container: {
-        flex: 1,
-        backgroundColor: "#fafafa",
+        flexGrow: 1,
+        backgroundColor: '#fcfeff'
+    },
+
+    textUnselect: {
+        color: '#1f1f1f',
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
+
+    textSelect: {
+        color: '#ff394a',
+        fontSize: 16,
+        fontWeight: 'bold',
+        borderBottomColor: '#ff394a',
+        borderBottomWidth: 3
+    },
+
+    textMiddleUnselect: {
+        color: '#1f1f1f',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+
+    textMiddleSelect: {
+        color: '#ff394a',
+        fontSize: 16,
+        fontWeight: 'bold',
+        borderBottomColor: '#ff394a',
+        borderBottomWidth: 3
+    },
+
+    boxName: {
+        paddingVertical: 18,
+        paddingHorizontal: 20,
+        backgroundColor: '#fcfeff',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    firstBox: {
+        width: "100%",
+        backgroundColor: 'white',
+        marginTop: 0,
+        borderRadius: 8,
+        flexDirection: 'row',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+
+        elevation: 2,
+        paddingHorizontal: 16,
+        paddingVertical: 16
+    },
+
+    firstBoxOpen: {
+        width: "100%",
+        backgroundColor: 'white',
+        marginTop: 0,
+        borderTopLeftRadius: 8,
+        borderTopLeftRadius: 8,
+        borderBottomStartRadius: 8,
+        borderBottomEndRadius: 8,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
+        paddingHorizontal: 16,
+        paddingVertical: 16
+    },
+
+    contentInfos: {
+        width: '100%',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
+
+        borderRadius: 10,
     },
 
     card: {
@@ -359,7 +540,6 @@ const styles = StyleSheet.create({
         borderColor: '#f4f4f7',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 25
     },
 
     cash: {
@@ -372,36 +552,5 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 10
-    },
-
-    boxOpen: {
-        flexGrow: 1,
-        borderRadius: 10,
-        backgroundColor: "white",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.20,
-        shadowRadius: 1.41,
-        // marginHorizontal: 30,
-        elevation: 2,
-        marginBottom: 14
-    },
-
-    box: {
-        width: "100%",
-        backgroundColor: "white",
-        borderRadius: 20,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-
-        elevation: 3,
     },
 })
