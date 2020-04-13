@@ -70,6 +70,9 @@ export default class orders extends Component {
                 type_building: 'Casa',
             }],
 
+            payment_option_card: false,
+            payment_option_cash: false,
+
         }
     }
 
@@ -101,22 +104,20 @@ export default class orders extends Component {
         )
     }
 
-    renderPrescription = ({ item }) => {
+    renderShipping = ({ item }) => {
 
-        if (item.prescription == true) {
-            return (
-                <View style={{ width: "100%", backgroundColor: "white", paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: '#f1f1f1', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        return (
+            <View style={{ width: "100%", backgroundColor: "white", justifyContent: 'center' }}>
 
-                    <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#1f1f1f' }}>{item.name} {item.weight}</Text>
-                    <TouchableOpacity
-                        onPress={() => { alert("Still in development") }}>
-                        <Image style={{ height: 13, width: 13, marginRight: 5 }}
-                            source={require("./../../assets/x.png")} />
-                    </TouchableOpacity>
+                <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', paddingTop: 6 }}>State - Country</Text>
+                <Text style={{ fontSize: 16, color: '#7b7b7b' }}>{this.state.basic_infos[0].location} - Brazil</Text>
+                <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', paddingTop: 6 }}>Type building</Text>
+                <Text style={{ fontSize: 16, color: '#7b7b7b' }}>{this.state.basic_infos[0].type_building}</Text>
+                <Text style={{ fontSize: 16, color: '#1f1f1f', fontWeight: 'bold', paddingTop: 6 }}>Price</Text>
+                <Text style={{ fontSize: 14, color: '#1dc6d2' }}>Free</Text>
 
-                </View>
-            )
-        }
+            </View>
+        )
     }
 
     renderOrder = ({ item }) => {
@@ -261,9 +262,9 @@ export default class orders extends Component {
                                 <FlatList
                                     style={{ paddingTop: 10, paddingBottom: 5 }}
                                     contentContainerStyle={{}}
-                                    data={this.state.items_cart}
+                                    data={this.state.basic_infos}
                                     keyExtractor={item => item.name}
-                                    renderItem={this.renderPrescription}
+                                    renderItem={this.renderShipping}
                                 />
                             </>
                         }
@@ -276,7 +277,7 @@ export default class orders extends Component {
                                     style={{ paddingTop: 10, paddingBottom: 5 }}
                                     contentContainerStyle={{}}
                                     data={this.state.orders}
-                                    keyExtractor={item => item.name}
+                                    keyExtractor={item => item.product_Name}
                                     renderItem={this.renderOrder}
                                 />
                                 <View style={{ flexGrow: 1 }}>
@@ -345,69 +346,39 @@ export default class orders extends Component {
                     />
 
                     <View style={{ flex: 1, position: "absolute", bottom: 0, paddingBottom: 30, paddingTop: 5, width: "100%", paddingHorizontal: 10, backgroundColor: "white" }}>
-                        <View style={{}}>
-                            {
-                                this.state.prescriptionTotal > 0 &&
 
-                                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                                    onPress={() => this.setState({ checked: !this.state.checked })}>
-                                    {
-                                        this.state.checked ?
-                                            <Image style={{ height: 30, width: 30 }} source={require('./../../assets/circleselect.png')} />
-                                            :
-                                            <Image style={{ height: 30, width: 30 }} source={require('./../../assets/circleunselect.png')} />
-                                    }
+                        {
+                            (this.state.payment_option_card || this.state.payment_option_cash) ?
 
-                                    <Text style={{ color: '#6d707b', fontSize: 15, marginLeft: 5 }}>I have prescription files to upload</Text>
+                                <TouchableOpacity
+                                    style={{ marginTop: 10 }}
+                                    activeOpacity={0.2}
+                                    onPress={() => {
+                                        this.props.navigation.navigate('routesBottom')
+                                    }}>
+
+                                    <Image style={{ height: 40, width: "100%", borderRadius: 20 }}
+                                        source={require("./../../assets/background.png")} />
+
+                                    <Text style={{ color: '#f1f1f1', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
 
                                 </TouchableOpacity>
-                            }
-                        </View>
 
-                        {this.state.prescriptionTotal > 0 ?
+                                :
 
-                            <TouchableOpacity
-                                style={{ marginTop: 10 }}
-                                activeOpacity={this.state.checked ? 0.2 : 1}
-                                onPress={() => {
-                                    if (this.state.checked) {
-                                        this.props.navigation.navigate('prescriptionCheckout')
-                                    }
-                                }}>
+                                <TouchableOpacity
+                                    style={{ marginTop: 10 }}
+                                    activeOpacity={this.state.checked ? 0.2 : 1}
+                                    onPress={() => {
+                                        if (this.state.checked) {
+                                            this.props.navigation.navigate('prescriptionCheckout')
+                                        }
+                                    }}>
+                                    <View style={{ height: 40, width: "100%", borderRadius: 20, backgroundColor: '#eaeaea' }}></View>
 
-                                {
-                                    this.state.checked ?
-                                        <Image style={{ height: 40, width: "100%", borderRadius: 20 }}
-                                            source={require("./../../assets/background.png")} />
-                                        :
-                                        <View style={{ height: 40, width: "100%", borderRadius: 20, backgroundColor: '#eaeaea' }}></View>
-                                }
+                                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
 
-                                {
-                                    this.state.checked ?
-                                        <Text style={{ color: '#f1f1f1', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
-                                        :
-                                        <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
-                                }
-
-                            </TouchableOpacity>
-
-                            :
-
-                            <TouchableOpacity
-                                style={{ marginTop: 10 }}
-                                activeOpacity={0.2}
-                                onPress={() => {
-                                    this.props.navigation.navigate('finalCheckout')
-                                }}>
-
-                                <Image style={{ height: 40, width: "100%", borderRadius: 20 }}
-                                    source={require("./../../assets/background.png")} />
-
-                                <Text style={{ color: '#f1f1f1', fontSize: 16, fontWeight: 'bold', position: 'absolute', alignSelf: 'center', marginTop: 10 }}>CONTINUE</Text>
-
-                            </TouchableOpacity>
-
+                                </TouchableOpacity>
                         }
 
                     </View>

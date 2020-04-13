@@ -15,11 +15,11 @@ import haveInsurance from './../pages/loginCheckout/haveInsurance';
 import finalCheckout from './../pages/loginCheckout/finalCheckout'; 
 
 export default createAppContainer(createStackNavigator({
+    routesBottom,
     infosCheckout,
     prescriptionCheckout,
     haveInsurance,
     finalCheckout,
-    routesBottom,
     index,
     first,
     second,
